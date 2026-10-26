@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azad — Script Writer & Content Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --accent: #c8392b;
+    --muted: #7a7268;
+    --border: #ddd8cc;
+    --card: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 420px;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    top: -80px;
+    right: -20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8vw, 62px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: #c8b89a;
+  }
+
+  .header-sub {
+    font-size: 17px;
+    color: #b0a898;
+    max-width: 500px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 14px;
+    color: #888077;
+  }
+
+  .header-meta a {
+    color: #c8b89a;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,184,154,0.3);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .header-meta a:hover { color: #fff; border-color: #fff; }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  section { margin-bottom: 64px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  p { color: #2e2a25; margin-bottom: 14px; font-weight: 300; }
+
+  /* ── ABOUT ── */
+  .about-body {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 28px 28px 24px;
+    border-radius: 2px;
+  }
+
+  .about-body p { margin-bottom: 0; }
+
+  /* ── SERVICES ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 520px) { .services-grid { grid-template-columns: 1fr; } }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 22px 20px;
+    border-radius: 2px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .service-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .service-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .service-card p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── WHY ME ── */
+  .why-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .why-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .why-list li span.icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── SAMPLES ── */
+  .samples-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sample-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+  .sample-item:hover { border-color: var(--accent); }
+
+  .sample-left { flex: 1; }
+
+  .sample-num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .sample-title {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .sample-tag {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .sample-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    flex-shrink: 0;
+    border: 1px solid rgba(200,57,43,0.3);
+    padding: 6px 12px;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .sample-link:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ── PROCESS ── */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .process-step {
+    display: flex;
+    gap: 20px;
+    padding: 20px 24px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+  }
+  .process-step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--border);
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .step-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── CTA ── */
+  .cta-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 36px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .cta-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    color: var(--paper);
+    margin-bottom: 12px;
+  }
+
+  .cta-box p {
+    color: #a09880;
+    margin-bottom: 28px;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 13px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  .btn-secondary {
+    background: transparent;
+    color: #c8b89a;
+    border: 1px solid rgba(200,184,154,0.35);
+    padding: 13px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: #c8b89a; color: #fff; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 30px 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  header, section {
+    animation: fadeUp 0.5s ease both;
+  }
+  section:nth-child(1) { animation-delay: 0.05s; }
+  section:nth-child(2) { animation-delay: 0.10s; }
+  section:nth-child(3) { animation-delay: 0.15s; }
+  section:nth-child(4) { animation-delay: 0.20s; }
+  section:nth-child(5) { animation-delay: 0.25s; }
+  section:nth-child(6) { animation-delay: 0.30s; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="tag">Available for Freelance Work</div>
+  <h1>Azad<br><em>Script Writer &<br>Content Researcher</em></h1>
+  <p class="header-sub">I write research-backed scripts that hook viewers in the first 5 seconds — and keep them watching till the end.</p>
+  <div class="header-meta">
+    <span>📍 India (Remote)</span>
+    <a href="mailto:azadcreates0@gmail.com">azadcreates0@gmail.com</a>
+    <a href="https://wa.me/918087416621">WhatsApp: 8087416621</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── ABOUT ── -->
+  <section>
+    <div class="section-label">About Me</div>
+    <h2>I help creators stop losing viewers.</h2>
+    <div class="about-body">
+      <p>
+        Most creators struggle not because their ideas are bad — but because their scripts don't hold attention. I fix that.
+      </p>
+      <p>
+        I write research-based scripts for YouTube Shorts and Instagram Reels on topics like psychology, history, business, and self-improvement. My writing is built around one goal: keeping the viewer glued from the first word to the last.
+      </p>
+      <p>
+        My style is inspired by the storytelling approach of Dhruv Rathee, Mohak Mangal, and Nitish Rajput — clear, conversational, and backed by real research. No fluff. No filler. Just stories that land.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section>
+    <div class="section-label">Services</div>
+    <h2>What I deliver.</h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">▶️</div>
+        <h3>YouTube Shorts Scripts</h3>
+        <p>Hook-first, fast-paced, designed for max watch time and shares.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Instagram Reels Scripts</h3>
+        <p>Scroll-stopping opens, punchy pacing, and strong CTAs that convert.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>Content Research</h3>
+        <p>Deep-dive research on your topic, condensed into clear, usable notes.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🪝</div>
+        <h3>Hook & Retention Rewrite</h3>
+        <p>Got a weak intro? I'll rewrite your hook and improve the flow so viewers stay.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── WHY HIRE ME ── -->
+  <section>
+    <div class="section-label">Why Work With Me</div>
+    <h2>What makes my scripts different.</h2>
+    <ul class="why-list">
+      <li>
+        <span class="icon">📖</span>
+        <span><strong>Research first.</strong> Every script is backed by facts, studies, or verified sources — not surface-level takes.</span>
+      </li>
+      <li>
+        <span class="icon">🧠</span>
+        <span><strong>Psychology-driven storytelling.</strong> I use proven retention techniques: open loops, curiosity gaps, and pattern interrupts.</span>
+      </li>
+      <li>
+        <span class="icon">⚡</span>
+        <span><strong>Hook-obsessed.</strong> The first 3–5 seconds make or break your video. I write openings that stop the scroll.</span>
+      </li>
+      <li>
+        <span class="icon">✅</span>
+        <span><strong>Creator-friendly delivery.</strong> Clean, ready-to-read scripts with clear notes — no confusion, no back-and-forth.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── WORK SAMPLES ── -->
+  <section>
+    <div class="section-label">Work Samples</div>
+    <h2>Scripts I've written.</h2>
+    <div class="samples-list">
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 01</div>
+          <div class="sample-title">Why Indian Cities Are Getting Hotter</div>
+          <div class="sample-tag">Environment · YouTube Shorts</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 02</div>
+          <div class="sample-title">The Last 24 Hours of Hitler's Life</div>
+          <div class="sample-tag">History · YouTube Shorts</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 03</div>
+          <div class="sample-title">Social Media Is Controlling You</div>
+          <div class="sample-tag">Psychology · Instagram Reels</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 04</div>
+          <div class="sample-title">Why Motivation Fails After 3 Days</div>
+          <div class="sample-tag">Self-Improvement · YouTube Shorts</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 05</div>
+          <div class="sample-title">How MrBeast Built a Billion-Dollar Business</div>
+          <div class="sample-tag">Business · YouTube Shorts</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-left">
+          <div class="sample-num">Sample 06</div>
+          <div class="sample-title">How YouTube Makes Money</div>
+          <div class="sample-tag">Business · YouTube Shorts</div>
+        </div>
+        <a class="sample-link" href="#" target="_blank">View ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PROCESS ── -->
+  <section>
+    <div class="section-label">How I Work</div>
+    <h2>Simple. No surprises.</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h4>You share your topic & brief</h4>
+          <p>Tell me your niche, target audience, video length, and any references you like.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h4>I research & plan</h4>
+          <p>I go deep on the topic, find the most compelling angle, and structure the script for maximum retention.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h4>You get a clean, ready-to-use script</h4>
+          <p>Delivered on time with hook, body, and CTA — formatted so you can read and record immediately.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h4>One round of revisions included</h4>
+          <p>Not happy with something? I'll fix it. Your satisfaction matters more than a quick turnaround.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section>
+    <div class="cta-box">
+      <h2>Let's make your next video<br><em>impossible to skip.</em></h2>
+      <p>Send me your topic and I'll tell you if it's a good fit — no commitment needed.</p>
+      <div class="cta-buttons">
+        <a class="btn-primary" href="mailto:azadcreates0@gmail.com">Email Me</a>
+        <a class="btn-secondary" href="https://wa.me/918087416621">WhatsApp Me</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 Azad · Script Writer & Content Researcher · India (Remote)
+</footer>
+
+</body>
+</html>
